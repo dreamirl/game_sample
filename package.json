@@ -1,0 +1,34 @@
+{
+  "name": "game_sample",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@dreamirl/dreamengine": "github:dreamirl/dreamengine"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.11.0",
+    "parcel-plugin-asset-copier": "^1.0.0"
+  },
+  "scripts": {
+    "start": "npm run dev",
+    "dev": "parcel html/browser.html -d dist/dev/",
+    "build": "parcel build index.html -d dist/prod/",
+    "dev:electron": "NODE_ENV=electron parcel index.html -d dist/dev-electron/",
+    "build:electron": "NODE_ENV=electron parcel build index.html -d dist/prod-electron/",
+    "win-dev:electron": "set NODE_ENV=electron&& parcel index.html -d dist/dev-electron/",
+    "win-build:electron": "set NODE_ENV=electron&& parcel build index.html -d dist/prod-electron/"
+  },
+  "alias": {
+    "Game": "./src/Game.js",
+    "inputs": "./src/data/inputs",
+    "audios": "./src/data/audios",
+    "dictionary": "./src/data/dictionary",
+    "achievements": "./src/data/achievements",
+    "images": "./src/data/images"
+  },
+  "assetsPath": "./assets/"
+}

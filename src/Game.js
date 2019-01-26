@@ -307,6 +307,13 @@ Game.onload = function()
       Game.moveCamera = !Game.moveCamera;
       this.renderers[ 1 ].text = "Camera Move: " + Game.moveCamera.toString();
       this.pointerover();
+
+      if ( Game.moveCamera ) {
+        Game.camera.focus(Game.ship);
+      }
+      else {
+        Game.camera.target = undefined;
+      }
     }
   } );
   
@@ -328,5 +335,8 @@ Game.onload = function()
   DE.Inputs.on( "keyDown", "deep", function() { Game.ship.z += 0.1 } );
   DE.Inputs.on( "keyDown", "undeep", function() { Game.ship.z -= 0.1 } );
 }
+
+// just for helping debugging stuff, never do this ;)
+window.Game = Game;
 
 export default Game;

@@ -112,11 +112,6 @@ Game.onload = function()
     },
     checkInputs: function() {
       this.translate( { x: this.axes.x * 2, y: this.axes.y * 2 } );
-      
-      if ( Game.moveCamera ) {
-        Game.camera.x -= 2 * this.axes.x;
-        Game.camera.y -= 2 * this.axes.y;
-      }
     },
     automatisms: [ [ "checkInputs", "checkInputs" ] ],
     gameObjects: [
@@ -154,6 +149,7 @@ Game.onload = function()
       } )
     ]
   } );
+  Game.camera.focus(Game.ship);
   
   Game.ship.fire = function()
   {

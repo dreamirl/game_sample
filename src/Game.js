@@ -275,28 +275,13 @@ Game.onload = function()
       } )
     ],
     pointerover: function() {
-      if ( !Game.moveCamera ) {
-        this.renderer.updateRender( { color: "0xFFDEDE" } );
-      }
-      else {
-        this.renderer.updateRender( { color: "0xDEFFDE" } );
-      }
+      this.renderer.updateRender( { color: Game.moveCamera ? "0xDEFFDE" : "0xFFDEDE" } );
     },
     pointerout: function() {
-      if ( !Game.moveCamera ) {
-        this.renderer.updateRender( { color: "0xFFCDCD" } );
-      }
-      else {
-        this.renderer.updateRender( { color: "0xCDFFCD" } );
-      }
+      this.renderer.updateRender( { color: Game.moveCamera ? "0xCDFFCD" : "0xFFCDCD" } );
     },
     pointerdown: function() {
-      if ( !Game.moveCamera ) {
-        this.renderer.updateRender( { color: "0xFF0000" } );
-      }
-      else {
-        this.renderer.updateRender( { color: "0x00FF00" } );
-      }
+      this.renderer.updateRender( { color: Game.moveCamera ? "0x00FF00" : "0xFF0000" } );
     },
     pointerup: function() {
       Game.moveCamera = !Game.moveCamera;
@@ -304,15 +289,56 @@ Game.onload = function()
       this.pointerover();
 
       if ( Game.moveCamera ) {
-        Game.camera.focus(Game.ship, { lock: { rotation: false } } );
+        Game.camera.focus(Game.ship, { options: { rotation: true } } );
       }
       else {
         Game.camera.target = undefined;
       }
     }
   } );
+
+  var buttonFocusObj = new DE.GameObject( {
+    x: 500, y: 100,
+    zindex     : 50,
+    interactive: true,
+    hitArea    : new DE.PIXI.Rectangle( -225, -50, 450, 100 ),
+    cursor     : "pointer",
+    renderers  : [
+      new DE.RectRenderer( 400, 80, "0xFFCDCD", { lineStyle: [ 4, "0x000000", 1 ], fill: true, x: -200, y: -40 } ),
+      new DE.TextRenderer( "Object focus: false", {
+        textStyle: {
+          fill           : 'black',
+          fontSize       : 35,
+          fontFamily     : 'Snippet, Monaco, monospace',
+          strokeThickness: 1,
+          align          : "center"
+        }
+      } )
+    ],
+    pointerover: function() {
+      this.renderer.updateRender( { color: Game.focusObj ? "0xDEFFDE" : "0xFFDEDE" } );
+    },
+    pointerout: function() {
+      this.renderer.updateRender( { color: Game.focusObj ? "0xCDFFCD" : "0xFFCDCD" } );
+    },
+    pointerdown: function() {
+      this.renderer.updateRender( { color: Game.focusObj ? "0x00FF00" : "0xFF0000" } );
+    },
+    pointerup: function() {
+      Game.focusObj = !Game.focusObj;
+      this.renderers[ 1 ].text = "Object focus: " + Game.focusObj.toString();
+      this.pointerover();
+
+      if ( Game.focusObj ) {
+        Game.ship2.focus(Game.ship, { options: { rotation: true }, offsets: { x: -250, y: -250 } } );
+      }
+      else {
+        Game.ship2.target = undefined;
+      }
+    }
+  } );
   
-  Game.scene.add( Game.ship, Game.ship2, Game.heart1, Game.heart2, customShape, rectangle, rectangle2, button, Game.targetPointer );
+  Game.scene.add( Game.ship, Game.ship2, Game.heart1, Game.heart2, customShape, rectangle, rectangle2, button, buttonFocusObj, Game.targetPointer );
   
   DE.Inputs.on( "keyDown", "left", function() { Game.ship.axes.x = -2; } );
   DE.Inputs.on( "keyDown", "right", function() { Game.ship.axes.x = 2; } );

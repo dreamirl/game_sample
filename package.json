@@ -18,11 +18,11 @@
   "scripts": {
     "start": "npm run dev",
     "dev": "parcel html/browser.html -d dist/dev/",
-    "build": "parcel build index.html -d dist/prod/",
-    "dev:electron": "NODE_ENV=electron parcel index.html -d dist/dev-electron/",
-    "build:electron": "NODE_ENV=electron parcel build index.html -d dist/prod-electron/",
-    "win-dev:electron": "set NODE_ENV=electron&& parcel index.html -d dist/dev-electron/",
-    "win-build:electron": "set NODE_ENV=electron&& parcel build index.html -d dist/prod-electron/"
+    "build": "parcel build html/browser.html -d dist/prod/",
+    "dev:electron": "NODE_ENV=electron parcel html/browser.html -d dist/dev-electron/",
+    "build:electron": "NODE_ENV=electron parcel build html/browser.html -d dist/prod-electron/",
+    "win-dev:electron": "set NODE_ENV=electron&& parcel html/browser.html -d dist/dev-electron/",
+    "win-build:electron": "set NODE_ENV=electron&& parcel build html/browser.html -d dist/prod-electron/"
   },
   "alias": {
     "Game": "./src/Game.js",

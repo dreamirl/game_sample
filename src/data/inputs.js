@@ -11,6 +11,7 @@ const inputs = {
   "up":{"keycodes":[ "K.up" , 'K.z', 'K.w' ] },
   "down":{"keycodes":[ "K.down" , 'K.s' ] },
   "jump":{"keycodes":[ 'G0.B.A', "K.space" ], "stayOn": true },
+  "skipMessage":{"keycodes":[ 'G0.B.A', "K.space" ] },
   
   "fire":{"keycodes":[ "K.space" , 'G0.B.A' ]/*, "interval": 100*/ },
   "deep":{"keycodes":[ "K.shift" , 'G0.B.B' ]/*, "interval": 100*/ },

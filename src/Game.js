@@ -9,6 +9,8 @@
 simple Game declaration
 **/
 import DE from '@dreamirl/dreamengine';
+import MessageBox from '@dreamirl/de-plugin-messagebox';
+
 var Game = {};
   
 Game.render = null;
@@ -327,6 +329,13 @@ Game.onload = function()
 
   DE.Inputs.on( "keyDown", "deep", function() { Game.ship.z += 0.1 } );
   DE.Inputs.on( "keyDown", "undeep", function() { Game.ship.z -= 0.1 } );
+
+  MessageBox.init();
+  MessageBox.create( "Hey, this is a simple MessageBox", () => {
+    MessageBox.create( "You can make a multiline Message with \/n /n Like this !", () => {
+      MessageBox.create( "And if you add optional parameters, you can also add a name :)", undefined, undefined, { name: "Supername" } );
+    } )
+  } );
 }
 
 export default Game;

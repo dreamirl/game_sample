@@ -149,7 +149,6 @@ Game.onload = function()
       } )
     ]
   } );
-  Game.camera.focus(Game.ship);
   
   Game.ship.fire = function()
   {
@@ -305,6 +304,13 @@ Game.onload = function()
       Game.moveCamera = !Game.moveCamera;
       this.renderers[ 1 ].text = "Camera Move: " + Game.moveCamera.toString();
       this.pointerover();
+
+      if ( Game.moveCamera ) {
+        Game.camera.focus(Game.ship);
+      }
+      else {
+        Game.camera.target = undefined;
+      }
     }
   } );
   
@@ -333,5 +339,8 @@ Game.onload = function()
     } )
   } );
 }
+
+// just for helping debugging stuff, never do this ;)
+window.Game = Game;
 
 export default Game;

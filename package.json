@@ -10,19 +10,19 @@
     "@dreamirl/dreamengine": "github:dreamirl/dreamengine"
   },
   "devDependencies": {
-    "autoprefixer": "^9.4.6",
+    "cross-env": "^5.2.0",
     "parcel-bundler": "^1.11.0",
     "parcel-plugin-asset-copier": "^1.0.0",
+    "parcel-plugin-bundle-visualiser": "^1.2.0",
+    "autoprefixer": "^9.4.6",
     "postcss-modules": "^1.4.1"
   },
   "scripts": {
-    "start": "npm run dev",
-    "dev": "parcel html/browser.html -d dist/dev/",
-    "build": "parcel build html/browser.html -d dist/prod/",
-    "dev:electron": "NODE_ENV=electron parcel html/browser.html -d dist/dev-electron/",
-    "build:electron": "NODE_ENV=electron parcel build html/browser.html -d dist/prod-electron/",
-    "win-dev:electron": "set NODE_ENV=electron&& parcel html/browser.html -d dist/dev-electron/",
-    "win-build:electron": "set NODE_ENV=electron&& parcel build html/browser.html -d dist/prod-electron/"
+    "start": "cross-env npm run dev",
+    "dev": "cross-env parcel html/browser.html -d dist/dev/",
+    "build": "cross-env parcel build html/browser.html -d dist/prod/",
+    "dev:electron": "cross-env NODE_ENV=electron parcel html/browser.html -d dist/dev-electron/",
+    "build:electron": "cross-env NODE_ENV=electron parcel build html/browser.html -d dist/prod-electron/"
   },
   "alias": {
     "Game": "./src/Game.js",

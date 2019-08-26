@@ -9,6 +9,8 @@
 simple Game declaration
 **/
 import DE from '@dreamirl/dreamengine';
+import NebulaOffline from '@dreamirl/de-plugin-nebula-offline';
+
 var Game = {};
   
 Game.render = null;
@@ -35,42 +37,45 @@ Game.init = function()
   Game.render.init();
   
   DE.start();
+  NebulaOffline.init();
+  
 }
 
 Game.onload = function()
 {
-
+  
   console.log( "game start" );
-
+  
   // scene
   Game.scene = new DE.Scene();
-
+  
   // don't do this because DisplayObject bounds is not set to the render size but to the objects inside the scene
   // scene.interactive = true;
   // scene.click = function()
   // {
-  //   console.log( "clicked", arguments );
-  // }
-
-  // if no Camera, we add the Scene to the render (this can change if I make Camera)
-  
-  Game.camera = new DE.Camera( 0, 0, 1920, 1080, { scene: Game.scene, backgroundImage: "bg" } );
-  Game.camera.interactive = true;
-  Game.camera.pointermove = function( pos, e ) { Game.targetPointer.moveTo( pos, 100 ); };
-  Game.camera.pointerdown = function( pos, e )
-  {
-    Game.ship.gameObjects[ 0 ].moveTo( Game.targetPointer, 500 )
-    // Game.targetPointer.shake( 10, 10, 200 );
-    Game.targetPointer.renderer.setBrightness( [ 1, 0 ] );
-  };
-  Game.camera.pointerup = function( pos, e ) { console.log( "up" ); Game.targetPointer.shake( 10, 10, 200 ); };
-  Game.render.add( Game.camera );
-  // Game.render.add( Game.scene );
-  
-  Game.targetPointer = new DE.GameObject( {
-    zindex: 500
-    , renderer: new DE.SpriteRenderer( { spriteName: "target", scale: 0.3 } )
-  } );
+    //   console.log( "clicked", arguments );
+    // }
+    
+    // if no Camera, we add the Scene to the render (this can change if I make Camera)
+    
+    Game.camera = new DE.Camera( 0, 0, 1920, 1080, { scene: Game.scene, backgroundImage: "bg" } );
+    Game.camera.interactive = true;
+    Game.camera.pointermove = function( pos, e ) { Game.targetPointer.moveTo( pos, 100 ); };
+    Game.camera.pointerdown = function( pos, e )
+    {
+      Game.ship.gameObjects[ 0 ].moveTo( Game.targetPointer, 500 )
+      // Game.targetPointer.shake( 10, 10, 200 );
+      Game.targetPointer.renderer.setBrightness( [ 1, 0 ] );
+    };
+    Game.camera.pointerup = function( pos, e ) { console.log( "up" ); Game.targetPointer.shake( 10, 10, 200 ); };
+    Game.render.add( Game.camera );
+    // Game.render.add( Game.scene );
+    
+    Game.targetPointer = new DE.GameObject( {
+      zindex: 500
+      , renderer: new DE.SpriteRenderer( { spriteName: "target", scale: 0.3 } )
+    } );
+    
   
   Game.ship; Game.ship2;
   

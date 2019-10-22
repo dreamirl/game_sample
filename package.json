@@ -1,6 +1,6 @@
 {
   "name": "game_sample",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "keywords": [],
@@ -10,11 +10,11 @@
     "@dreamirl/dreamengine": "github:dreamirl/dreamengine"
   },
   "devDependencies": {
-    "cross-env": "^5.2.0",
-    "parcel-bundler": "^1.11.0",
+    "autoprefixer": "^9.6.1",
+    "cross-env": "^5.2.1",
+    "parcel-bundler": "^1.12.3",
     "parcel-plugin-asset-copier": "^1.0.0",
     "parcel-plugin-bundle-visualiser": "^1.2.0",
-    "autoprefixer": "^9.4.6",
     "postcss-modules": "^1.4.1"
   },
   "scripts": {

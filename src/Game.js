@@ -150,6 +150,7 @@ Game.onload = function()
   
   Game.ship.fire = function()
   {
+    DE.Save.save('fire', DE.Save.get('fire')+1 || 1);
     DE.Audio.fx.play( "piew" );
     var bullet = new DE.GameObject( {
       x       : this.x,
@@ -163,6 +164,7 @@ Game.onload = function()
     // bullet.addAutomatism( "inverseAutomatism", "inverseAutomatism", { value1: "rotate", interval: 100 } );
     bullet.addAutomatism( "askToKill", "askToKill", { interval: 2000, persistent: false } );
     
+    console.log('fired in total ' + DE.Save.get('fire') + ' times');
     Game.scene.add( bullet );
   };
   

@@ -6,17 +6,29 @@
  * Please declare in the same way than this example.
  */
 const dictionary = {
-  "en": {
-    "play": "Play",
-    "settings": "Settings",
-    "credits": "Credits",
-    "pause": "Pause"
+  en: {
+    play: "Play",
+    settings: "Settings",
+    credits: "Credits",
+    pause: "Pause",
+    player: {
+      name: "Toto",
+      data: {
+        realname: "Super toto"
+      }
+    }
   },
-  "fr" : {
-    "play": "Jouer",
-    "settings": "Options",
-    "credits": "Credits",
-    "pause": "Pause"
+  fr: {
+    play: "Jouer",
+    settings: "Options",
+    credits: "Credits",
+    pause: "Pause",
+    player: {
+      name: "Toto",
+      data: {
+        realname: "Super toto"
+      }
+    }
   }
 };
 

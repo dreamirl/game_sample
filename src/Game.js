@@ -91,7 +91,7 @@ Game.onload = function()
     renderers   : [
       new DE.SpriteRenderer( { spriteName: "ayeraShip" } ),
       new DE.TextRenderer( "", {
-        localizationKey: "player",
+        localizationKey: "player.data.realname",
         y: -100,
         textStyle: {
           fill           : 'white',

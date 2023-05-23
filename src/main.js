@@ -1,6 +1,6 @@
 import DE from '@dreamirl/dreamengine';
 
-import Game from 'Game';
+import Game from './Game';
 import inputs from 'inputs';
 import audios from 'audios';
 import dictionary from 'dictionary';
@@ -15,7 +15,7 @@ DE.init({
   onReady: Game.init,
   onLoad: Game.onload,
   inputs: inputs,
-  audios: audios,
+  //audios: audios,
   dictionary: dictionary,
   images: images,
   achievements: achievements,

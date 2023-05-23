@@ -7,7 +7,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@dreamirl/dreamengine": "github:dreamirl/dreamengine"
+    "@dreamirl/dreamengine": "github:dreamirl/dreamengine#pixi-v6"
   },
   "devDependencies": {
     "autoprefixer": "^9.7.3",
@@ -16,7 +16,8 @@
     "parcel-plugin-asset-copier": "^1.0.0",
     "parcel-plugin-bundle-visualiser": "^1.2.0",
     "postcss-modules": "^1.5.0",
-    "prettier": "^1.18.2"
+    "prettier": "^1.18.2",
+    "typescript": "^5.0.4"
   },
   "scripts": {
     "start": "cross-env npm run dev",
@@ -30,7 +31,7 @@
     "reset": "npm i && npm run link && npm run whipe"
   },
   "alias": {
-    "Game": "./src/Game.js",
+    "Game": "./src/Game.ts",
     "inputs": "./src/data/inputs",
     "audios": "./src/data/audios",
     "dictionary": "./src/data/dictionary",

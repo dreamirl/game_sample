@@ -75,6 +75,7 @@ Game.onload = function() {
     zindex: 500,
     renderer: new DE.SpriteRenderer({ spriteName: 'target', scale: 0.3 }),
   });
+  Game.targetPointer.name = 'La target';
 
   Game.ship;
   Game.ship2;
@@ -122,6 +123,7 @@ Game.onload = function() {
     },
     checkInputs: function() {
       this.translate({ x: this.axes.x * 2, y: this.axes.y * 2 });
+      DE.Tween.update(DE.Time.frameDelay);
     },
     automatisms: [['checkInputs', 'checkInputs']],
     gameObjects: [
@@ -166,7 +168,7 @@ Game.onload = function() {
 
   Game.ship.fire = function() {
     DE.Save.save('fire', DE.Save.get('fire') + 1 || 1);
-    DE.Audio.fx.play('piew');
+    //DE.Audio.play('piew');
     var bullet = new DE.GameObject({
       x: this.x,
       y: this.y,
@@ -194,7 +196,7 @@ Game.onload = function() {
       new DE.SpriteRenderer({
         spriteName: 'reactor',
         y: 80,
-        scale: 0.3,
+        scale: {x: 0.3, y: 0.3},
         rotation: Math.PI,
       }),
     ],
@@ -432,7 +434,7 @@ Game.onload = function() {
       if (Game.moveCamera) {
         Game.camera.focus(Game.ship, { options: { rotation: true } });
       } else {
-        Game.camera.target = undefined;
+        Game.camera.stopFocus();
       }
     },
   });
@@ -484,10 +486,10 @@ Game.onload = function() {
       if (Game.focusObj) {
         Game.ship2.focus(Game.ship, {
           options: { rotation: true },
-          offsets: { x: -250, y: -250 },
+          offset: { x: -250, y: -250 },
         });
       } else {
-        Game.ship2.target = undefined;
+        Game.ship2.stopFocus();
       }
     },
   });

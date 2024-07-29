@@ -14,7 +14,7 @@
   },
   "devDependencies": {
     "@parcel/transformer-glsl": "^2.6.2",
-    "autoprefixer": "^9.7.3",
+    "autoprefixer": "^10.4.19",
     "buffer": "^6.0.3",
     "cross-env": "^5.2.1",
     "electron-osx-sign": "^0.6.0",

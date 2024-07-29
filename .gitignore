@@ -3,3 +3,6 @@ dist/
 .cache/
 @dreamirl/
 .DS_Store
+.husky/
+.parcel-cache/
+*.tiled-session

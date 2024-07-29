@@ -9,21 +9,26 @@
 simple Game declaration
 **/
 import DE from '@dreamirl/dreamengine';
-var Game = {};
 
-Game.render = null;
-Game.scene = null;
-Game.ship = null;
-Game.obj = null;
+let camera: DE.Camera;
+let render: DE.Render;
+let scene: DE.Scene;
+let ship: DE.GameObject;
+let ship2: DE.GameObject;
+let obj: DE.GameObject;
+let targetPointer: DE.GameObject;
+let shapes: any;
+let isObjectFocused = false;
+let isMoveCameraActive = false;
 
 // init
-Game.init = function() {
+function init() {
   console.log('game init');
   // DE.config.DEBUG = 1;
   // DE.config.DEBUG_LEVEL = 2;
 
   // Create the renderer before assets start loading
-  Game.render = new DE.Render('render', {
+  render = new DE.Render('render', {
     resizeMode: 'stretch-ratio',
     width: 1920,
     height: 1080,
@@ -31,53 +36,45 @@ Game.init = function() {
     roundPixels: false,
     powerPreferences: 'high-performance',
   });
-  Game.render.init();
+  render.init();
 
   DE.start();
-};
+}
 
-Game.onload = function() {
+function onload() {
   console.log('game start');
 
   // scene
-  Game.scene = new DE.Scene();
+  scene = new DE.Scene('demoScene');
 
-  // don't do this because DisplayObject bounds is not set to the render size but to the objects inside the scene
-  // scene.interactive = true;
-  // scene.click = function()
-  // {
-  //   console.log( "clicked", arguments );
-  // }
-
-  // if no Camera, we add the Scene to the render (this can change if I make Camera)
-
-  Game.camera = new DE.Camera(0, 0, 1920, 1080, {
-    scene: Game.scene,
+  camera = new DE.Camera(0, 0, 1920, 1080, {
+    scene,
     backgroundImage: 'bg',
   });
-  Game.camera.interactive = true;
-  Game.camera.pointermove = function(pos, e) {
-    Game.targetPointer.moveTo(pos, 100);
-  };
-  Game.camera.pointerdown = function(pos, e) {
-    Game.ship.gameObjects[0].moveTo(Game.targetPointer, 500);
-    // Game.targetPointer.shake( 10, 10, 200 );
-    Game.targetPointer.renderer.setBrightness([1, 0]);
-  };
-  Game.camera.pointerup = function(pos, e) {
-    console.log('up');
-    Game.targetPointer.shake(10, 10, 200);
-  };
-  Game.render.add(Game.camera);
-  // Game.render.add( Game.scene );
+  camera.interactive = true;
 
-  Game.targetPointer = new DE.GameObject({
-    zindex: 500,
+  // TODO: this one does not work anymore
+  camera.pointermove = function(pos, e) {
+    targetPointer.moveTo(pos, 100);
+  };
+  camera.pointerdown = function(pos, e) {
+    ship.gameObjects[0].moveTo(targetPointer, 500);
+    // targetPointer.shake( 10, 10, 200 );
+    targetPointer.renderer.setBrightness([1, 0]);
+  };
+  camera.pointerup = function(pos, e) {
+    console.log('up');
+    targetPointer.shake(10, 10, 200);
+  };
+  render.add(camera);
+
+  targetPointer = new DE.GameObject({
+    zIndex: 500,
     renderer: new DE.SpriteRenderer({ spriteName: 'target', scale: 0.3 }),
   });
 
-  Game.ship;
-  Game.ship2;
+  ship;
+  ship2;
 
   // WIP working on a simple "AnimatedSprite" declaration
   // var imgs = ["ship1.png","ship2.png","ship3.png","ship4.png","ship5.png","ship6.png"];
@@ -91,7 +88,7 @@ Game.onload = function() {
 
   // var mc = new PIXI.extras.AnimatedSprite(textureArray);
 
-  Game.ship = new DE.GameObject({
+  ship = new DE.GameObject({
     x: 240,
     y: 240,
     scale: 1,
@@ -164,9 +161,9 @@ Game.onload = function() {
     ],
   });
 
-  Game.ship.fire = function() {
+  ship.fire = function() {
     DE.Save.save('fire', DE.Save.get('fire') + 1 || 1);
-    DE.Audio.fx.play('piew');
+    DE.Audio.play('piew');
     var bullet = new DE.GameObject({
       x: this.x,
       y: this.y,
@@ -183,10 +180,10 @@ Game.onload = function() {
     });
 
     console.log('fired in total ' + DE.Save.get('fire') + ' times');
-    Game.scene.add(bullet);
+    scene.add(bullet);
   };
 
-  Game.ship2 = new DE.GameObject({
+  ship2 = new DE.GameObject({
     x: 700,
     y: 640,
     renderers: [
@@ -199,18 +196,18 @@ Game.onload = function() {
       }),
     ],
   });
-  Game.ship2.addAutomatism('lookAt', 'lookAt', { value1: Game.ship });
+  ship2.addAutomatism('lookAt', 'lookAt', { value1: ship });
 
-  Game.heart1 = new DE.GameObject({
+  let heart1 = new DE.GameObject({
     x: 1600,
     y: 100,
-    zindex: 10,
+    zIndex: 10,
     renderer: new DE.TextureRenderer({ spriteName: 'heart' }),
   });
-  Game.heart2 = new DE.GameObject({
+  let heart2 = new DE.GameObject({
     x: 1700,
     y: 100,
-    zindex: 10,
+    zIndex: 10,
     renderer: new DE.TextureRenderer({
       spriteName: 'heart',
       width: 50,
@@ -218,7 +215,7 @@ Game.onload = function() {
     }),
   });
 
-  var rectangle = new DE.GameObject({
+  let rectangle = new DE.GameObject({
     x: 800,
     y: 300,
     interactive: true,
@@ -246,11 +243,11 @@ Game.onload = function() {
       console.log('mouse out');
     },
   });
-  var rectangle2 = new DE.GameObject({
+  let rectangle2 = new DE.GameObject({
     x: 850,
     y: 300,
-    renderer: new DE.RectRenderer(40, 70, '0xDDF0CC', {
-      lineStyle: [4, '0x00F30D', 10],
+    renderer: new DE.RectRenderer(40, 70, 0xddf0cc, {
+      lineStyle: [4, 0x00f30d, 10],
       x: -20,
       y: -35,
     }),
@@ -268,12 +265,13 @@ Game.onload = function() {
       { x: -25, y: -25 },
     ),
   });
-  Game.shapes = {
+  shapes = {
     customShape: customShape,
     rectangle: rectangle,
     rectangle2: rectangle2,
   };
 
+  // TODO: z has been deprecated because it's not really useful
   function scroller() {
     this.z -= 0.1;
     if (this.z < 2) {
@@ -367,7 +365,7 @@ Game.onload = function() {
     });
     f.scroller = scroller;
     f.addAutomatism('scroller', 'scroller');
-    Game.scene.add(a, b, c, d, e, f);
+    scene.add(a, b, c, d, e, f);
 
     if (i % 10 == 0) {
       g = new DE.GameObject({
@@ -376,12 +374,12 @@ Game.onload = function() {
         y: 980,
         zindex: 10,
         z: i * 0.1,
-        renderer: new DE.RectRenderer(10, 30, '0xFFFFFF', { x: -5, y: -15 }),
+        renderer: new DE.RectRenderer(10, 30, 0xffffff, { x: -5, y: -15 }),
       });
       g.scroller = scroller;
       g.addAutomatism('scroller', 'scroller');
 
-      Game.scene.add(g);
+      scene.add(g);
     }
   }
 
@@ -411,28 +409,28 @@ Game.onload = function() {
     ],
     pointerover: function() {
       this.renderer.updateRender({
-        color: Game.moveCamera ? '0xDEFFDE' : '0xFFDEDE',
+        color: isMoveCameraActive ? '0xDEFFDE' : '0xFFDEDE',
       });
     },
     pointerout: function() {
       this.renderer.updateRender({
-        color: Game.moveCamera ? '0xCDFFCD' : '0xFFCDCD',
+        color: isMoveCameraActive ? '0xCDFFCD' : '0xFFCDCD',
       });
     },
     pointerdown: function() {
       this.renderer.updateRender({
-        color: Game.moveCamera ? '0x00FF00' : '0xFF0000',
+        color: isMoveCameraActive ? '0x00FF00' : '0xFF0000',
       });
     },
     pointerup: function() {
-      Game.moveCamera = !Game.moveCamera;
-      this.renderers[1].text = 'Camera Move: ' + Game.moveCamera.toString();
+      isMoveCameraActive = !isMoveCameraActive;
+      this.renderers[1].text = 'Camera Move: ' + isMoveCameraActive.toString();
       this.pointerover();
 
-      if (Game.moveCamera) {
-        Game.camera.focus(Game.ship, { options: { rotation: true } });
+      if (isMoveCameraActive) {
+        camera.focus(ship, { options: { rotation: true } });
       } else {
-        Game.camera.target = undefined;
+        camera.target = undefined;
       }
     },
   });
@@ -463,90 +461,90 @@ Game.onload = function() {
     ],
     pointerover: function() {
       this.renderer.updateRender({
-        color: Game.focusObj ? '0xDEFFDE' : '0xFFDEDE',
+        color: isObjectFocused ? '0xDEFFDE' : '0xFFDEDE',
       });
     },
     pointerout: function() {
       this.renderer.updateRender({
-        color: Game.focusObj ? '0xCDFFCD' : '0xFFCDCD',
+        color: isObjectFocused ? '0xCDFFCD' : '0xFFCDCD',
       });
     },
     pointerdown: function() {
       this.renderer.updateRender({
-        color: Game.focusObj ? '0x00FF00' : '0xFF0000',
+        color: isObjectFocused ? '0x00FF00' : '0xFF0000',
       });
     },
     pointerup: function() {
-      Game.focusObj = !Game.focusObj;
-      this.renderers[1].text = 'Object focus: ' + Game.focusObj.toString();
+      isObjectFocused = !isObjectFocused;
+      this.renderers[1].text = 'Object focus: ' + isObjectFocused.toString();
       this.pointerover();
 
-      if (Game.focusObj) {
-        Game.ship2.focus(Game.ship, {
+      if (isObjectFocused) {
+        ship2.focus(ship, {
           options: { rotation: true },
           offsets: { x: -250, y: -250 },
         });
       } else {
-        Game.ship2.target = undefined;
+        ship2.stopFocus();
       }
     },
   });
 
-  Game.scene.add(
-    Game.ship,
-    Game.ship2,
-    Game.heart1,
-    Game.heart2,
+  scene.add(
+    ship,
+    ship2,
+    heart1,
+    heart2,
     customShape,
     rectangle,
     rectangle2,
     button,
     buttonFocusObj,
-    Game.targetPointer,
+    targetPointer,
   );
 
   DE.Inputs.on('keyDown', 'left', function() {
-    Game.ship.axes.x = -2;
+    ship.axes.x = -2;
   });
   DE.Inputs.on('keyDown', 'right', function() {
-    Game.ship.axes.x = 2;
+    ship.axes.x = 2;
   });
   DE.Inputs.on('keyUp', 'right', function() {
-    Game.ship.axes.x = 0;
+    ship.axes.x = 0;
   });
   DE.Inputs.on('keyUp', 'left', function() {
-    Game.ship.axes.x = 0;
+    ship.axes.x = 0;
   });
 
   DE.Inputs.on('keyDown', 'up', function() {
-    Game.ship.axes.y = -2;
+    ship.axes.y = -2;
   });
   DE.Inputs.on('keyDown', 'down', function() {
-    Game.ship.axes.y = 2;
+    ship.axes.y = 2;
   });
   DE.Inputs.on('keyUp', 'down', function() {
-    Game.ship.axes.y = 0;
+    ship.axes.y = 0;
   });
   DE.Inputs.on('keyUp', 'up', function() {
-    Game.ship.axes.y = 0;
+    ship.axes.y = 0;
   });
 
   DE.Inputs.on('keyDown', 'fire', function() {
-    Game.ship.addAutomatism('fire', 'fire', { interval: 150 });
+    ship.addAutomatism('fire', 'fire', { interval: 150 });
   });
   DE.Inputs.on('keyUp', 'fire', function() {
-    Game.ship.removeAutomatism('fire');
+    ship.removeAutomatism('fire');
   });
 
   DE.Inputs.on('keyDown', 'deep', function() {
-    Game.ship.z += 0.1;
+    ship.z += 0.1;
   });
   DE.Inputs.on('keyDown', 'undeep', function() {
-    Game.ship.z -= 0.1;
+    ship.z -= 0.1;
   });
+}
+
+export default {
+  init,
+  onload,
 };
-
-// just for helping debugging stuff, never do this ;)
-window.Game = Game;
-
-export default Game;

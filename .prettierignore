@@ -1,4 +1,6 @@
 .cache/*
 dist/*
 .git/*
-src/data/
+assets/
+tiled/
+*.frag

@@ -1,27 +1,36 @@
 {
   "name": "game_sample",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/main.js",
   "keywords": [],
-  "author": "",
+  "author": "Inateno - Dreamirl",
   "license": "ISC",
+  "engines": {
+    "node": "16"
+  },
   "dependencies": {
     "@dreamirl/dreamengine": "github:dreamirl/dreamengine"
   },
   "devDependencies": {
+    "@parcel/transformer-glsl": "^2.6.2",
     "autoprefixer": "^9.7.3",
+    "buffer": "^6.0.3",
     "cross-env": "^5.2.1",
-    "parcel-bundler": "^1.12.4",
-    "parcel-plugin-asset-copier": "^1.0.0",
-    "parcel-plugin-bundle-visualiser": "^1.2.0",
-    "postcss-modules": "^1.5.0",
-    "prettier": "^1.18.2"
+    "electron-osx-sign": "^0.6.0",
+    "os-browserify": "^0.3.0",
+    "parcel": "^2.6.2",
+    "parcel-reporter-static-files-copy": "^1.3.4",
+    "prettier": "^2.2.0",
+    "pretty-quick": "^3.1.1",
+    "process": "^0.11.10",
+    "punycode": "^1.4.1",
+    "querystring-es3": "^0.2.1"
   },
   "scripts": {
-    "start": "cross-env npm run dev",
-    "dev": "cross-env parcel html/browser.html -d dist/dev/",
-    "build": "cross-env parcel build html/browser.html -d dist/prod/",
+    "start": "cross-env npm run dev:browser",
+    "dev:browser": "cross-env parcel html/browser.html --dist-dir dist/dev/",
+    "build:browser": "cross-env parcel build html/browser.html -d dist/prod/",
     "dev:electron": "cross-env NODE_ENV=electron parcel html/browser.html -d dist/dev-electron/",
     "build:electron": "cross-env NODE_ENV=electron parcel build html/browser.html -d dist/prod-electron/",
     "format": "prettier --write \"**/*.{js,json,ts,tsx,md}\"",
@@ -29,13 +38,7 @@
     "whipe": "cross-env rm -rf .cache/ && rm -rf dist/",
     "reset": "npm i && npm run link && npm run whipe"
   },
-  "alias": {
-    "Game": "./src/Game.js",
-    "inputs": "./src/data/inputs",
-    "audios": "./src/data/audios",
-    "dictionary": "./src/data/dictionary",
-    "achievements": "./src/data/achievements",
-    "images": "./src/data/images"
-  },
-  "assetsPath": "./assets/"
+  "staticFiles": {
+    "staticPath": "./assets/"
+  }
 }

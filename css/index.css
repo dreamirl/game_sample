@@ -1,1 +1,98 @@
-@import '@dreamirl/dreamengine/css/default.css';
+/* this should work but does not, TODO fix it */
+/* @import '@dreamirl/dreamengine/css/default.css'; */
+
+#de-plugin-popups-container .de-plugin-popup {
+  background-image: none !important;
+  font-family: 'Noreya' !important;
+  /*border: 1px solid #aaa;*/
+  text-align: center;
+  color: #ddd;
+  display: flex !important;
+  flex-direction: column;
+  vertical-align: middle;
+  /* align-items: center; */
+  padding: 20px !important;
+  min-width: 50%;
+}
+
+.de-plugin-popup button {
+  background-image: none !important;
+  font-family: 'Noreya' !important;
+  color: #ddd !important;
+  font-size: 200% !important;
+  border: 1px solid #aaa;
+}
+
+.gifs {
+  margin-top: 2%;
+}
+
+.gif {
+  width: 40%;
+  vertical-align: middle;
+  margin: 0 8px;
+}
+
+#de-plugin-popup-right-bar {
+  flex: 1;
+  order: 1;
+  padding: 1px 0;
+}
+
+#de-plugin-popup-left-bar {
+  flex: 1;
+  order: 3;
+  padding: 1px 0;
+}
+
+#popup-deco {
+  position: absolute;
+  bottom: -35px;
+  left: 50%;
+  margin-left: -5px;
+}
+
+.popup-container {
+  display: flex;
+  align-items: center;
+  position: initial !important;
+}
+
+.content {
+  order: 2;
+  margin: 0 10px;
+  display: inline-grid;
+  height: fit-content;
+  position: relative;
+}
+
+.btn-in-text {
+  margin: 4px auto;
+}
+
+#okBtn {
+  position: absolute !important;
+  right: 40px;
+  bottom: 0;
+  padding: 0 !important;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Noreya' !important;
+}
+h1,
+h2,
+h3,
+h4 {
+  font-family: 'Noreya' !important;
+}
+
+.noCursor {
+  cursor: none;
+}

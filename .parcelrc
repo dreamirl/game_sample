@@ -1,0 +1,17 @@
+{
+  "extends": [
+    "@parcel/config-default"
+  ],
+  "reporters": [
+    "...",
+    "parcel-reporter-static-files-copy"
+  ],
+  "transformers": {
+    "*.node": [
+      "@parcel/transformer-raw"
+    ],
+    "**/steamworks.js/dist/win64/steamworksjs.win32-x64-msvc.node": [
+      "@parcel/transformer-binary"
+    ]
+  }
+}

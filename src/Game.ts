@@ -196,7 +196,7 @@ Game.onload = function() {
       new DE.SpriteRenderer({
         spriteName: 'reactor',
         y: 80,
-        scale: {x: 0.3, y: 0.3},
+        scale: { x: 0.3, y: 0.3 },
         rotation: Math.PI,
       }),
     ],
@@ -494,6 +494,77 @@ Game.onload = function() {
     },
   });
 
+  var gamepadBtns = new DE.GameObject({
+    x: 1920 * 0.9,
+    y: 1080 * 0.75,
+    curKey:
+      DE.Inputs.dbInputs.GAMEPADBUTTONS[
+        DE.gamepad.getSavedControls().inputs.get('fire')
+      ],
+    renderer: new DE.TextRenderer('Fire Input', {
+      textStyle: {
+        fill: 'white',
+        fontSize: 40,
+        strokeThickness: 5,
+        align: 'center',
+      },
+      y: -160,
+    }),
+
+    onChangeSelection(id: number) {
+      for (let i = 0; i < 4; i++) {
+        if (i !== id) {
+          this.gameObjects[i].renderers[0].tint = '0xFFFFFF';
+        }
+      }
+    },
+  });
+
+  let buttons = [
+    { x: 0, y: 1, name: 'A' },
+    { x: 1, y: 0, name: 'B' },
+    { x: -1, y: 0, name: 'X' },
+    { x: 0, y: -1, name: 'Y' },
+  ];
+
+  for (let i = 0; i < 4; i++) {
+    gamepadBtns.add(
+      new DE.GameObject({
+        x: buttons[i].x * 75,
+        y: buttons[i].y * 75,
+        selected: false,
+        renderers: [
+          new DE.SpriteRenderer({ spriteName: 'button' }),
+          new DE.TextRenderer(buttons[i].name, {
+            textStyle: {
+              fill: 'white',
+              fontSize: 40,
+              strokeThickness: 5,
+              align: 'center',
+            },
+          }),
+        ],
+        interactive: true,
+        pointerdown: function() {
+          let newKey = i;
+          DE.gamepad.switchKey(this.parent.curKey, newKey, ['fire']);
+          this.parent.curKey = newKey;
+          this.renderers[0].tint = '0xFF0000';
+          this.parent.onChangeSelection(i);
+        },
+        pointerover: function() {
+          this.renderers[0].tint = '0xFF5555';
+        },
+        pointerout: function() {
+          this.renderers[0].tint =
+            this.parent.curKey === i ? '0xFF0000' : '0xFFFFFF';
+        },
+      }),
+    );
+  }
+
+  gamepadBtns.gameObjects[gamepadBtns.curKey].renderers[0].tint = '0xFF0000';
+
   Game.scene.add(
     Game.ship,
     Game.ship2,
@@ -505,6 +576,7 @@ Game.onload = function() {
     button,
     buttonFocusObj,
     Game.targetPointer,
+    gamepadBtns,
   );
 
   DE.Inputs.on('keyDown', 'left', function() {
@@ -534,10 +606,14 @@ Game.onload = function() {
   });
 
   DE.Inputs.on('keyDown', 'fire', function() {
-    Game.ship.addAutomatism('fire', 'fire', { interval: 150 });
+    Game.ship.addAutomatism('fireFirst', 'fire', {
+      interval: 0,
+      persistent: false,
+    });
+    Game.ship.addAutomatism('fireLoop', 'fire', { interval: 150 });
   });
   DE.Inputs.on('keyUp', 'fire', function() {
-    Game.ship.removeAutomatism('fire');
+    Game.ship.removeAutomatism('fireLoop');
   });
 
   DE.Inputs.on('keyDown', 'deep', function() {

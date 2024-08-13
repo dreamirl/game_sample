@@ -36,7 +36,9 @@ const images = {
       [ "touchControlBackground", "touch-control/background.png", { "totalFrame": 1, "animated": false } ],
       [ "touchControlStick", "touch-control/stick.png", { "totalFrame": 1, "animated": false } ],
       
-      [ "platform", "platform.png", { "totalFrame": 1, "interval": 1, "totalLine": 1, "animated":false } ]
+      [ "platform", "platform.png", { "totalFrame": 1, "interval": 1, "totalLine": 1, "animated":false } ],
+
+      [ "button", "64x64.png" ],
     ],
     
     // a custom pool not loaded by default, you have to load it whenever you want (you can display a custom loader or just the default loader)

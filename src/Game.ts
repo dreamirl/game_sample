@@ -8,7 +8,10 @@
 ***
 simple Game declaration
 **/
+import * as PIXI from 'pixi.js';
 import DE from '@dreamirl/dreamengine';
+import BitmapTextRenderer from '@dreamirl/dreamengine/src/classes/renderer/BitmapTextRenderer';
+import SpriteRenderer from '@dreamirl/dreamengine/src/classes/renderer/SpriteRenderer';
 
 let camera: DE.Camera;
 let render: DE.Render;
@@ -54,15 +57,15 @@ function onload() {
   camera.interactive = true;
 
   // TODO: this one does not work anymore
-  camera.pointermove = function(pos, e) {
+  camera.pointermove = function (pos, e) {
     targetPointer.moveTo(pos, 100);
   };
-  camera.pointerdown = function(pos, e) {
+  camera.pointerdown = function (pos, e) {
     ship.gameObjects[0].moveTo(targetPointer, 500);
     // targetPointer.shake( 10, 10, 200 );
     targetPointer.renderer.setBrightness([1, 0]);
   };
-  camera.pointerup = function(pos, e) {
+  camera.pointerup = function (pos, e) {
     console.log('up');
     targetPointer.shake(10, 10, 200);
   };
@@ -114,10 +117,10 @@ function onload() {
     ],
     axes: { x: 0, y: 0 },
     interactive: true,
-    click: function() {
+    click: function () {
       console.log('click');
     },
-    checkInputs: function() {
+    checkInputs: function () {
       this.translate({ x: this.axes.x * 2, y: this.axes.y * 2 });
     },
     automatisms: [['checkInputs', 'checkInputs']],
@@ -150,7 +153,7 @@ function onload() {
               spriteName: 'player-bullet',
               loop: true,
             }),
-            getCorrectMoveTo: function() {
+            getCorrectMoveTo: function () {
               // console.log( this.y, this.getWorldPos().y )
               this.moveTo({ y: -this.y }, 500, null, null, true);
             },
@@ -161,7 +164,7 @@ function onload() {
     ],
   });
 
-  ship.fire = function() {
+  ship.fire = function () {
     DE.Save.save('fire', DE.Save.get('fire') + 1 || 1);
     DE.Audio.play('piew');
     var bullet = new DE.GameObject({
@@ -234,11 +237,11 @@ function onload() {
         visible: false,
       }),
     ],
-    pointerover: function() {
+    pointerover: function () {
       this.renderers[1].visible = true;
       console.log('mouse over');
     },
-    pointerout: function() {
+    pointerout: function () {
       this.renderers[1].visible = false;
       console.log('mouse out');
     },
@@ -407,22 +410,22 @@ function onload() {
         },
       }),
     ],
-    pointerover: function() {
+    pointerover: function () {
       this.renderer.updateRender({
         color: isMoveCameraActive ? '0xDEFFDE' : '0xFFDEDE',
       });
     },
-    pointerout: function() {
+    pointerout: function () {
       this.renderer.updateRender({
         color: isMoveCameraActive ? '0xCDFFCD' : '0xFFCDCD',
       });
     },
-    pointerdown: function() {
+    pointerdown: function () {
       this.renderer.updateRender({
         color: isMoveCameraActive ? '0x00FF00' : '0xFF0000',
       });
     },
-    pointerup: function() {
+    pointerup: function () {
       isMoveCameraActive = !isMoveCameraActive;
       this.renderers[1].text = 'Camera Move: ' + isMoveCameraActive.toString();
       this.pointerover();
@@ -459,22 +462,22 @@ function onload() {
         },
       }),
     ],
-    pointerover: function() {
+    pointerover: function () {
       this.renderer.updateRender({
         color: isObjectFocused ? '0xDEFFDE' : '0xFFDEDE',
       });
     },
-    pointerout: function() {
+    pointerout: function () {
       this.renderer.updateRender({
         color: isObjectFocused ? '0xCDFFCD' : '0xFFCDCD',
       });
     },
-    pointerdown: function() {
+    pointerdown: function () {
       this.renderer.updateRender({
         color: isObjectFocused ? '0x00FF00' : '0xFF0000',
       });
     },
-    pointerup: function() {
+    pointerup: function () {
       isObjectFocused = !isObjectFocused;
       this.renderers[1].text = 'Object focus: ' + isObjectFocused.toString();
       this.pointerover();
@@ -490,6 +493,30 @@ function onload() {
     },
   });
 
+  let bitMapGo = new DE.GameObject({
+    x: 500,
+    y: 300,
+    renderer: new DE.TextRenderer('Hello World !', {
+      textStyle: {
+        fontFamily: 'Alphbeta',
+      },
+    }),
+  });
+
+  let bitMapXML: XMLDocument;
+  let bitMapSprite = new SpriteRenderer({ spriteName: 'bitMapFont' });
+
+  let loader = new PIXI.Loader();
+  loader.add('bitMapXML', 'assets/imgs/font/minogram_6x10.xml');
+
+  loader.load((loader, resources) => {
+    const xmlData = resources.bitMapXML.data;
+
+    const parser = new DOMParser();
+    bitMapXML = parser.parseFromString(xmlData, 'text/xml');
+    PIXI.BitmapFont.install(bitMapXML, bitMapSprite.texture);
+  });
+
   scene.add(
     ship,
     ship2,
@@ -501,45 +528,46 @@ function onload() {
     button,
     buttonFocusObj,
     targetPointer,
+    bitMapGo,
   );
 
-  DE.Inputs.on('keyDown', 'left', function() {
+  DE.Inputs.on('keyDown', 'left', function () {
     ship.axes.x = -2;
   });
-  DE.Inputs.on('keyDown', 'right', function() {
+  DE.Inputs.on('keyDown', 'right', function () {
     ship.axes.x = 2;
   });
-  DE.Inputs.on('keyUp', 'right', function() {
+  DE.Inputs.on('keyUp', 'right', function () {
     ship.axes.x = 0;
   });
-  DE.Inputs.on('keyUp', 'left', function() {
+  DE.Inputs.on('keyUp', 'left', function () {
     ship.axes.x = 0;
   });
 
-  DE.Inputs.on('keyDown', 'up', function() {
+  DE.Inputs.on('keyDown', 'up', function () {
     ship.axes.y = -2;
   });
-  DE.Inputs.on('keyDown', 'down', function() {
+  DE.Inputs.on('keyDown', 'down', function () {
     ship.axes.y = 2;
   });
-  DE.Inputs.on('keyUp', 'down', function() {
+  DE.Inputs.on('keyUp', 'down', function () {
     ship.axes.y = 0;
   });
-  DE.Inputs.on('keyUp', 'up', function() {
+  DE.Inputs.on('keyUp', 'up', function () {
     ship.axes.y = 0;
   });
 
-  DE.Inputs.on('keyDown', 'fire', function() {
+  DE.Inputs.on('keyDown', 'fire', function () {
     ship.addAutomatism('fire', 'fire', { interval: 150 });
   });
-  DE.Inputs.on('keyUp', 'fire', function() {
+  DE.Inputs.on('keyUp', 'fire', function () {
     ship.removeAutomatism('fire');
   });
 
-  DE.Inputs.on('keyDown', 'deep', function() {
+  DE.Inputs.on('keyDown', 'deep', function () {
     ship.z += 0.1;
   });
-  DE.Inputs.on('keyDown', 'undeep', function() {
+  DE.Inputs.on('keyDown', 'undeep', function () {
     ship.z -= 0.1;
   });
 }

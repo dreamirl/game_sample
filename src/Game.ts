@@ -503,6 +503,7 @@ function onload() {
     }),
   });
 
+  //TODO: Fix wrong format for bitMapXML
   let bitMapXML: XMLDocument;
   let bitMapSprite = new SpriteRenderer({ spriteName: 'bitMapFont' });
 

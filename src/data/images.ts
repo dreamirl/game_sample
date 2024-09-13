@@ -69,7 +69,7 @@ const images = {
         'platform.png',
         { totalFrame: 1, interval: 1, totalLine: 1, animated: false },
       ],
-      ['bitMapFont', 'fonts/minogram_6x10.png'],
+      ['minogram', 'fonts/minogram_6x10.xml'],
     ],
 
     // a custom pool not loaded by default, you have to load it whenever you want (you can display a custom loader or just the default loader)

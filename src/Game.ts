@@ -30,6 +30,8 @@ function init() {
   // DE.config.DEBUG = 1;
   // DE.config.DEBUG_LEVEL = 2;
 
+  PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
+
   // Create the renderer before assets start loading
   render = new DE.Render('render', {
     resizeMode: 'stretch-ratio',
@@ -495,27 +497,13 @@ function onload() {
 
   let bitMapGo = new DE.GameObject({
     x: 500,
-    y: 300,
-    renderer: new DE.TextRenderer('Hello World !', {
-      textStyle: {
-        fontFamily: 'Alphbeta',
-      },
+    y: 800,
+    scale: 5,
+    renderer: new DE.BitmapTextRenderer('Hello World !', {
+      fontName: 'minogram_6x10',
+      // fontSize: 30,
+      // scale: 5,
     }),
-  });
-
-  //TODO: Fix wrong format for bitMapXML
-  let bitMapXML: XMLDocument;
-  let bitMapSprite = new SpriteRenderer({ spriteName: 'bitMapFont' });
-
-  let loader = new PIXI.Loader();
-  loader.add('bitMapXML', 'assets/imgs/font/minogram_6x10.xml');
-
-  loader.load((loader, resources) => {
-    const xmlData = resources.bitMapXML.data;
-
-    const parser = new DOMParser();
-    bitMapXML = parser.parseFromString(xmlData, 'text/xml');
-    PIXI.BitmapFont.install(bitMapXML, bitMapSprite.texture);
   });
 
   scene.add(

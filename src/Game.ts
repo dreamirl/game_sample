@@ -495,14 +495,22 @@ function onload() {
     },
   });
 
+  //Tried and didn't work:
+  //changing scale of BitmapTextRenderer
+  //changing scale of GameObject
+  //changing the fontSize
+  //changing the resolution
+  //setting PIXI.settings to NEAREST (cf. near the start of this file)
+
   let bitMapGo = new DE.GameObject({
     x: 500,
     y: 800,
-    scale: 5,
+    // scale: 5,
     renderer: new DE.BitmapTextRenderer('Hello World !', {
       fontName: 'minogram_6x10',
       // fontSize: 30,
       // scale: 5,
+      // resolution: 16,
     }),
   });
 

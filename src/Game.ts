@@ -30,8 +30,6 @@ function init() {
   // DE.config.DEBUG = 1;
   // DE.config.DEBUG_LEVEL = 2;
 
-  PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
-
   // Create the renderer before assets start loading
   render = new DE.Render('render', {
     resizeMode: 'stretch-ratio',
@@ -495,23 +493,20 @@ function onload() {
     },
   });
 
-  //Tried and didn't work:
-  //changing scale of BitmapTextRenderer
-  //changing scale of GameObject
-  //changing the fontSize
-  //changing the resolution
-  //setting PIXI.settings to NEAREST (cf. near the start of this file)
-
   let bitMapGo = new DE.GameObject({
     x: 500,
     y: 800,
-    // scale: 5,
     renderer: new DE.BitmapTextRenderer('Hello World !', {
       fontName: 'minogram_6x10',
-      // fontSize: 30,
-      // scale: 5,
-      // resolution: 16,
+      fontSize: 40,
     }),
+  });
+
+  Object.entries(PIXI.BitmapFont.available).forEach((font) => {
+    console.log(
+      (font[1].pageTextures[0].baseTexture.scaleMode =
+        PIXI.SCALE_MODES.NEAREST),
+    );
   });
 
   scene.add(

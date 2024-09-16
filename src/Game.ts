@@ -10,8 +10,6 @@ simple Game declaration
 **/
 import * as PIXI from 'pixi.js';
 import DE from '@dreamirl/dreamengine';
-import BitmapTextRenderer from '@dreamirl/dreamengine/src/classes/renderer/BitmapTextRenderer';
-import SpriteRenderer from '@dreamirl/dreamengine/src/classes/renderer/SpriteRenderer';
 
 let camera: DE.Camera;
 let render: DE.Render;
@@ -500,13 +498,6 @@ function onload() {
       fontName: 'minogram_6x10',
       fontSize: 40,
     }),
-  });
-
-  Object.entries(PIXI.BitmapFont.available).forEach((font) => {
-    console.log(
-      (font[1].pageTextures[0].baseTexture.scaleMode =
-        PIXI.SCALE_MODES.NEAREST),
-    );
   });
 
   scene.add(

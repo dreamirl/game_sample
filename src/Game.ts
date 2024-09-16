@@ -450,14 +450,10 @@ function onload() {
         x: -200,
         y: -40,
       }),
-      new DE.TextRenderer('Object focus: false', {
-        textStyle: {
-          fill: 'black',
-          fontSize: 35,
-          fontFamily: 'Snippet, Monaco, monospace',
-          strokeThickness: 1,
-          align: 'center',
-        },
+      new DE.BitmapTextRenderer('Object focus: false', {
+        fontName: 'minogram_6x10',
+        fontSize: 30,
+        tint: '0x000000',
       }),
     ],
     pointerover: function () {
@@ -491,15 +487,6 @@ function onload() {
     },
   });
 
-  let bitMapGo = new DE.GameObject({
-    x: 500,
-    y: 800,
-    renderer: new DE.BitmapTextRenderer('Hello World !', {
-      fontName: 'minogram_6x10',
-      fontSize: 40,
-    }),
-  });
-
   scene.add(
     ship,
     ship2,
@@ -511,7 +498,6 @@ function onload() {
     button,
     buttonFocusObj,
     targetPointer,
-    bitMapGo,
   );
 
   DE.Inputs.on('keyDown', 'left', function () {

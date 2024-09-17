@@ -34,8 +34,10 @@ function init() {
     width: 1920,
     height: 1080,
     backgroundColor: '0x00004F',
-    roundPixels: false,
+    roundPixels: true,
     powerPreferences: 'high-performance',
+    scaleMode: DE.PIXI.SCALE_MODES.NEAREST,
+    antialias: false,
   });
   render.init();
 

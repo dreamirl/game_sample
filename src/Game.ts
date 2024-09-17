@@ -385,6 +385,21 @@ function onload() {
     }
   }
 
+  //TODO Make the japanese character works
+  // let description = 'こんにちは、みんな';
+  let description =
+    'A large bat, visibly aggressive under the influence of the power of Gold.';
+
+  let testBat = new DE.GameObject({
+    x: 850,
+    y: 750,
+    renderer: new DE.BitmapTextRenderer(description, {
+      fontName: 'NoreyaBitmap',
+      fontSize: 40,
+      tint: 0xffffff,
+    }),
+  });
+
   var button = new DE.GameObject({
     x: 960,
     y: 100,
@@ -452,8 +467,8 @@ function onload() {
         y: -40,
       }),
       new DE.BitmapTextRenderer('Object focus: false', {
-        fontName: 'minogram_6x10',
-        fontSize: 30,
+        fontName: 'NoreyaBitmap',
+        fontSize: 50,
         tint: '0x000000',
       }),
     ],
@@ -499,6 +514,7 @@ function onload() {
     button,
     buttonFocusObj,
     targetPointer,
+    testBat,
   );
 
   DE.Inputs.on('keyDown', 'left', function () {

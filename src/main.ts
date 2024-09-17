@@ -9,7 +9,7 @@ import inputs from './data/inputs';
 
 console.log('game main file loaded DREAM_ENGINE is:', DE);
 
-export default function() {
+export default function () {
   return DE.Platform.init({ images }, () => {
     DE.config.DEBUG = true;
     DE.config.DEBUG_LEVEL = 5;

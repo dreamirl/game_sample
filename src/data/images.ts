@@ -70,6 +70,9 @@ const images = {
         { totalFrame: 1, interval: 1, totalLine: 1, animated: false },
       ],
       ['minogram', 'fonts/minogram_6x10.xml'],
+      ['NoreyaBitmap', 'fonts/NoreyaBitmap.xml'],
+      ['MontserratBitmap', 'fonts/MontserratBitmap.xml'],
+      ['GregJaponais', 'fonts/GregJaponais.xml'],
     ],
 
     // a custom pool not loaded by default, you have to load it whenever you want (you can display a custom loader or just the default loader)

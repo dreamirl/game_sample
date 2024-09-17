@@ -8,7 +8,6 @@
 ***
 simple Game declaration
 **/
-import * as PIXI from 'pixi.js';
 import DE from '@dreamirl/dreamengine';
 
 let camera: DE.Camera;

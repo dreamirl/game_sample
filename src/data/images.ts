@@ -73,6 +73,7 @@ const images = {
       ['NoreyaBitmap', 'fonts/NoreyaBitmap.xml'],
       ['MontserratBitmap', 'fonts/MontserratBitmap.xml'],
       ['GregJaponais', 'fonts/GregJaponais.xml'],
+      ['gregjaponais8', 'fonts/japonais/JaponaisBitmap.fnt'],
     ],
 
     // a custom pool not loaded by default, you have to load it whenever you want (you can display a custom loader or just the default loader)

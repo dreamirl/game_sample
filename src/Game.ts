@@ -95,7 +95,11 @@ function onload() {
     y: 240,
     scale: 1,
     renderers: [
-      new DE.SpriteRenderer({ spriteName: 'ayeraShip' }),
+      new DE.SpriteRenderer({
+        spriteName: 'ayeraShip',
+        // scaleX: 2,
+        // anchor: { x: 1, y: 0 },
+      }),
       new DE.TextRenderer('', {
         localizationKey: 'player.data.realname',
         y: -100,
@@ -254,6 +258,14 @@ function onload() {
       y: -35,
     }),
   });
+  function tweakRect(i = 1) {
+    setTimeout(() => {
+      tweakRect(i + 1);
+      rectangle2.renderer._initial.width += 50;
+      rectangle2.renderer.updateRender({ color: 0x123456 });
+    }, 1000 * i);
+  }
+  tweakRect();
 
   var customShape = new DE.GameObject({
     x: 900,
@@ -280,7 +292,7 @@ function onload() {
       this.z = 10;
     }
   }
-  for (var i = 0, a, b, c, d, e, f, g; i < 100; i += 5) {
+  for (var i = 0, a, b, c, d, e, f, g; i < 1; i += 5) {
     a = new DE.GameObject({
       _staticPosition: true,
       x: 100,
@@ -451,11 +463,11 @@ function onload() {
         x: -200,
         y: -40,
       }),
-      new DE.BitmapTextRenderer('Object focus: false', {
-        fontName: 'minogram_6x10',
-        fontSize: 30,
-        tint: '0x000000',
-      }),
+      // new DE.BitmapTextRenderer('Object focus: false', {
+      //   fontName: 'minogram_6x10',
+      //   fontSize: 30,
+      //   tint: '0x000000',
+      // }),
     ],
     pointerover: function () {
       this.renderer.updateRender({
